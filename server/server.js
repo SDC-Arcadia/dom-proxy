@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const path = require('path');
 
@@ -8,7 +9,7 @@ const PORT = process.env.PORT || 80;
 
 app.use((req, res, next) => {
   if (req.url === '/') {
-    res.redirect(301, req.url + '?productId=P001');
+    res.redirect(301, req.url + '?productId=1');
   }
   next();
 });

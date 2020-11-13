@@ -1,2 +1,4 @@
 node_modules
 index2.html
+rewrelic.js
+newrelic_agent.log
