@@ -12,7 +12,7 @@ const PORT = process.env.PORT;
 const API_SERVER = process.env.API_SERVER;
 
 app.use((req, res, next) => {
-  if (req.url === '/') {
+  if (req.url === '/products/') {
     res.redirect(301, req.url + '?productId=1');
   }
   next();
