@@ -1,11 +1,15 @@
 require('newrelic');
+require('isomorphic-fetch');
+require('dotenv').config();
 const express = require('express');
-const path = require('path');
+const productDetail = require('../services/server.js');
+const Layout = require('../templates/productDetailTemplate.js');
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
+const API_SERVER = process.env.API_SERVER;
 
 app.use((req, res, next) => {
   if (req.url === '/') {
@@ -14,7 +18,19 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, '../client')));
+
+app.use(express.urlencoded({ extended: false }));
+
+
+app.get('/:productId?', (req, res) => {
+
+  const productId = req.query.productId;
+  fetch(`${API_SERVER}/productFullData/${productId}`)
+    .then((response) => response.json())
+    .then((product) => [productDetail.default(product), product])
+    .then(([html, product]) => res.send(Layout(html, product)))
+    .catch ((error) => console.log('fetch error', error));
+});
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
