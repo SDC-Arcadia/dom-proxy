@@ -1,3 +1,4 @@
+module.exports = (html, product) => `
 <!DOCTYPE html>
 <html>
   <head>
@@ -52,7 +53,7 @@
           <div id="Photos"></div>
           <div id="zoom-portal-root">
 
-            <div id="product_detail"></div>
+            <div id="product_detail">${html}</div>
 
           </div>
         </div>
@@ -280,13 +281,9 @@
           <img src="https://acloudguru-darchik-website2018.s3.amazonaws.com/footerbase.png" style="height: 30;padding-left: 210;">
         </section>
       </footer>
-
-      <!-- DEV Bundle -->
-      <!-- <script src="http://localhost:3001/main.bundle.js"></script> -->
+      <script>window.__product__ = ${JSON.stringify(product)}</script>
       <!-- prod bundle -->
       <script type="module" src="https://rpt22-fec-kwame.s3.us-west-1.amazonaws.com/bundles/product-detail.prod-bundle-SSR.js.gz"></script>
-    <!-- <script type="module" src="http://54.67.122.61:3004/photos.prod-bundle.js"></script>
-    <script type="module" src="http://3.218.98.72:3001/product-detail.prod-bundle.js"></script>
-    <script type="module" src="http://ec2-204-236-154-81.us-west-1.compute.amazonaws.com:3007/reviews.prod-bundle.js"></script> -->
   </body>
 </html>
+`;
