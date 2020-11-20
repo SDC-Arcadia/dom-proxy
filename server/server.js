@@ -21,12 +21,19 @@ app.use((req, res, next) => {
 
 app.use(express.urlencoded({ extended: false }));
 
+app.use(express.static('./client/'));
 
-app.get('/:productId?', (req, res) => {
+app.get('/products/:productId?', (req, res) => {
 
   const productId = req.query.productId;
   fetch(`${API_SERVER}/productFullData/${productId}`)
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        throw new Error('Invalid Product ID');
+      }
+    })
     .then((product) => [productDetail.default(product), product])
     .then(([html, product]) => res.send(Layout(html, product)))
     .catch ((error) => console.log('fetch error', error));
