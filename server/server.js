@@ -35,7 +35,7 @@ app.get('/products/:productId?', (req, res) => {
       }
     })
     .then((product) => [productDetail.default(product), product])
-    .then(([html, product]) => res.send(Layout(html, product)))
+    .then(([html, product]) => res.set('Cache-Control', 'public, max-age=31557600, s-maxage=31557600').send(Layout(html, product)))
     .catch ((error) => console.log('fetch error', error));
 });
 
